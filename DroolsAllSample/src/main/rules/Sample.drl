@@ -1,0 +1,20 @@
+package com.sample
+ 
+import com.sample.DroolsTest.Message;
+
+/* TOOL TIP
+ * validations make sure the project is in drools type 
+ * right-click->configure->convert to drools project
+ */
+function Message setMessageName(Message message)
+{
+	message.setMessage("HI pratap");
+	return message;
+}
+
+rule "GoodBye"
+	when
+		message : Message()
+	then
+		insert(setMessageName(message));		
+end

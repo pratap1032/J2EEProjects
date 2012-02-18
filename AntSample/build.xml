@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Ant Example" default="execute">
+
+	<property name="web.dir" location="WebContent" />
+	<property name="web.lib.dir" location="${web.dir}/WEB-INF/lib" />
+	<property name="org.mello.dir" location="org/mello/" />
+	<property name="build.classes.dir" location="build/classes" />
+	<property name="project.name" value="AntSample" />
+
+	<target name="clean">
+		<delete dir="${build.classes.dir}" />
+		<delete dir="src" />
+		<delete dir="Hello.jar"/>
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="build/classes" />
+		<mkdir dir="src/com/hello" />
+	</target>
+
+	<target name="copy" depends="init">
+		<copy todir="src/com/hello/">
+			<fileset dir="${org.mello.dir}">
+				<exclude name="**/*.txt" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compile" depends="copy">
+		<javac srcdir="src" destdir="${build.classes.dir}" />
+		<jar destfile="Hello.jar" basedir="${build.classes.dir}/com/hello" />
+	</target>
+	
+	<target name="execute" depends="compile">
+		<java classname="com.hello.HelloWorld" classpath="${build.classes.dir}" />
+	</target>
+
+</project>
